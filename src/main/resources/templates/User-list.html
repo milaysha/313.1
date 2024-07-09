@@ -29,6 +29,9 @@
         </table>
     </div>
     <p><a href="/user-create">Create user</a></p>
+    <form th:action="@{/logout}" method="post">
+        <input type="submit" value="Logout">
+    </form>
 </div>
 </body>
 </html>
