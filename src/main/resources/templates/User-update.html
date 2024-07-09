@@ -1,0 +1,45 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Update User</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<form action="*" th:action="@{/User-update}" th:object="${user}" method="post">-->
+<!--    <label for="id">ID</label>-->
+<!--    <input readonly type="number" th:field="*{id}" id="id" placeholder="ID">-->
+<!--    <br/>-->
+<!--    <label for="firstName">First Name</label>-->
+<!--    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">-->
+<!--    <br/>-->
+<!--    <label for="lastName">Last Name</label>-->
+<!--    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">-->
+<!--    <br/>-->
+<!--    <input type="submit" value="Update User">-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+<form action="/admin/user-update" th:action="@{/admin/user-update}" th:object="${user}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label for="firstName">First Name</label>
+    <input type="text" th:field="*{firstName}" id="firstName" placeholder="First Name">
+    <br/>
+    <label for="lastName">Last Name</label>
+    <input type="text" th:field="*{lastName}" id="lastName" placeholder="Last Name">
+    <br/>
+    <label for="Password">Password</label>
+    <input type="text" th:field="*{Password}" id="Password" placeholder="Password">
+    <br/>
+    <input type="submit" value="Update User">
+</form>
+
+</body>
+</html>
