@@ -1,3 +1,4 @@
+
 package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class UserService {
     }
 
     public User findById(Long id) {
-        return userRepository.getOne(id);
+        return userRepository.findById(id).get();
     }
 
     public List<User> findAll() {

@@ -1,95 +1,64 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
-      xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <meta charset="UTF-8">
-    <title>Users</title>
+<html  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="ru">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link th:rel="stylesheet" th:href="@{assets/select2-develop/dist/css/select2.css}"/>
-    <link th:rel="stylesheet" th:href="@{assets/select2-bootstrap4-theme-master/dist/select2-bootstrap4.css}"/>
-    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}"/>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <title>Page</title>
 </head>
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <h1 class="navbar-brand" th:text="${'users Roles: ' + curUsersRoles}"></h1>
-        <!--        я хуй знвет как тут делать чтобы отображались какая роль-->
-
-        <!--        эта хуета работает, не трогать!!-->
-    </div>
-    <form class="d-flex">
-        <a type="submit" class="justify-content-end nav-link text-muted" th:href="@{/logout}">Logout</a>
-    </form>
-</nav>
-<div class="container-fluid">
-    <div class="row ">
-        <div style="flex: 0 0 auto; width: 20%">
-            <div class="d-flex flex-column flex-shrink-0 bg-body-secondary p-3 h-100"> <!--style="width: 280px;-->
-                <ul class="nav nav-pills flex-column mb-auto">
-                    <li class="nav-item">
-                        <div th:if="${#strings.contains(curUsersRoles,'ADMIN')}" sec:authorize="hasAuthority('ROLE_ADMIN')">
-                            <a th:href="@{/admin/users}" class="nav-link ps-5" aria-current="page">
-                                Admin
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <a th:href="@{/user}" class="nav-link link-body-emphasis ps-5">
-                            User
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="col-8 mt-3">
-            <h1>User info</h1>
-            <div class="">
-                <div class="tab-content" id="myTabContent">
-                    <!--                TABLE-->
-                    <div class="tab-pane fade show active" id="userTable" role="tabpanel" aria-labelledby="user-table-tab">
-                        <table class="table table-striped">
-                            <thead>
-                            <hr/>
-                            <tr>
-                                <th>ID</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>User Name</th>
-                                <th>Roles</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td th:text="${user.getId()}"></td>
-                                <td th:text="${user.getFirstName()}"></td>
-                                <td th:text="${user.getLastName()}"></td>
-                                <td th:text="${user.getUsername()}"></td>
-                                <td>
-                        <span th:each="role,iterStat : ${user.getRoles()}">
-                            <span th:text="${#strings.replace(role.getName(), 'ROLE_', '')}"></span>
-                            <span th:if="${!iterStat.last}" th:text="${', '}"></span>
-                        </span>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+<header>
+    <div class="bs">
+        <div class="container-fluid bg-dark text-white my-4" >
+            <div class="row gx-5">
+                <div class="col-lg-1 ms-auto">
+                    <form th:action="@{/logout}" method="get">
+                        <button type="submit" class="btn bg-dark text-secondary">Выход</button>
+                    </form>
                 </div>
             </div>
         </div>
-        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-        <script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </div>
+</header>
 
+<div class="d-flex align-items-start">
+    <!-- Создаем кнопку слева для получения информации о юзере -->
+    <div class="col-2">
+        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" id="v-pills-user-tab" data-bs-toggle="pill" data-bs-target="#v-pills-user" type="button" role="tab" aria-controls="v-pills-user" aria-selected="true">Пользователь</button>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+
+        <h1 >Общая информация о пользователе </h1>
+
+        <div class="p-3 border bg-light">
+            <table class="table table-secondary table-striped table-hover caption-top table-bordered ">
+                <h5>О пользователе </h5>
+                <thead class="table-light">
+                <tr>
+                    <th class="col">Id</th>
+                    <th class="col">First Name</th>
+                    <th class="col">Last Name</th>
+                    <th class="col">User Name</th>
+                    <th class="col">Role</th>
+                </tr>
+                </thead>
+                <tbody id="basicTable"></tbody>
+            </table>
+            <br>
+        </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="/user.js"></script>
 </body>
 </html>

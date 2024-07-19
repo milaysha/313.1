@@ -14,7 +14,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserService;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,8 +22,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Controller
 public class UserController {
-
-
     private final UserService userService;
     private final RoleRepository roleRepository;
     @Autowired
@@ -77,5 +74,6 @@ public class UserController {
         model.addAttribute("curUsersRoles", authentication.getAuthorities().stream().map(r-> r.getAuthority()).collect(Collectors.toList()));
         return "UserInfo";
     }
+
 }
 
